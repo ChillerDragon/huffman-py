@@ -56,7 +56,6 @@ class Huffman:
             node.num_bits = depth
 
     def construct_tree(self, frequencies: list[int]) -> None:
-        nodes_left_storage: list[HuffmanConstructNode] = [HuffmanConstructNode(0, 0) for _ in range(0, HUFFMAN_MAX_SYMBOLS)]
         nodes_left: list[HuffmanConstructNode] = [HuffmanConstructNode(0, 0) for _ in range(0, HUFFMAN_MAX_SYMBOLS)]
 
         num_nodes_left = HUFFMAN_MAX_SYMBOLS
@@ -68,12 +67,11 @@ class Huffman:
             self.nodes[i].leafs[1] = 0xFFFF
 
             if(i == HUFFMAN_EOF_SYMBOL):
-                nodes_left_storage[i].frequency = 1
+                nodes_left[i].frequency = 1
             else:
-                nodes_left_storage[i].frequency = frequencies[i]
+                nodes_left[i].frequency = frequencies[i]
 
-            nodes_left_storage[i].node_id = i
-            nodes_left[i] = nodes_left_storage[i]
+            nodes_left[i].node_id = i
 
         self.num_nodes = HUFFMAN_MAX_SYMBOLS
 
