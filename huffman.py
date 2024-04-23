@@ -103,16 +103,16 @@ class Huffman:
 
         for i in range(0, HUFFMAN_LUTSIZE):
             bits = i
-            k = -1
             node = self.start_node
+            k = 0
             while k < HUFFMAN_LUTBITS:
-                k += 1
-                node = self.nodes[node.leafs[bits&1]]
+                node = self.nodes[node.leafs[bits & 1]]
                 bits >>= 1
 
                 if node.num_bits != 0:
                     self.decoded_lut[i] = node
                     break
+                k += 1
 
             if k == HUFFMAN_LUTBITS:
                 self.decoded_lut[i] = node
