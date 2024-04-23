@@ -17,8 +17,6 @@ print(decompressed) # => b'hello world'
 
 import functools
 
-from typing import Optional
-
 FREQUENCY_TABLE = [
 	1 << 30, 4545, 2657, 431, 1950, 919, 444, 482, 2244,
         617, 838, 542, 715, 1814, 304, 240, 754, 212, 647, 186,
@@ -225,19 +223,20 @@ class Huffman:
         bits = 0
         bitcount = 0
         eof = self.nodes[HUFFMAN_EOF_SYMBOL]
-        node: Optional[Node] = None
+        node = Node(0, 0, 0)
 
         while True:
-            node = None
+            found_node = False
             if bitcount >= HUFFMAN_LUTBITS:
                 node = self.decoded_lut[bits & HUFFMAN_LUTMASK]
+                found_node = True
 
             while bitcount < 24 and src_index < size:
                 bits |= data[src_index] << bitcount
                 src_index += 1
                 bitcount += 8
 
-            if not node:
+            if not found_node:
                 node = self.decoded_lut[bits & HUFFMAN_LUTMASK]
 
             if node.num_bits != 0:
