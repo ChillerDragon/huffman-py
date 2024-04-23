@@ -93,13 +93,13 @@ class Huffman:
         self.start_node = self.nodes[self.num_nodes-1]
         self.setbits_r(self.start_node, 0, 0)
 
-    def __init__(self, frequencies: list[int]) -> None:
+    def __init__(self) -> None:
         self.nodes: list[Node] = [Node(0, 0, 0) for _ in range(0, HUFFMAN_MAX_NODES)]
         self.decoded_lut: list[Node] = [Node(0, 0, 0) for _ in range(0, HUFFMAN_LUTSIZE)]
         self.num_nodes = 0
         self.start_node = Node(0, 0, 0)
 
-        self.construct_tree(frequencies)
+        self.construct_tree(FREQUENCY_TABLE)
 
         for i in range(0, HUFFMAN_LUTSIZE):
             bits = i
@@ -161,10 +161,4 @@ class Huffman:
                 break
             dst.append(node.symbol)
         return bytes(dst)
-
-huffman = Huffman(FREQUENCY_TABLE)
-# a = huffman.decompress(bytes([174, 149, 19, 92, 9, 87, 194, 22, 177, 86, 220, 218, 34, 56, 185, 18, 156, 168, 184, 1]))
-a = huffman.decompress(bytearray([188, 21, 55, 0]))
-
-print(a)
 
