@@ -213,7 +213,7 @@ class Huffman:
             bits >>= 8
             bitcount -= 8
         dst.append(bits)
-        return dst
+        return bytes(dst)
 
     def decompress(self, data: bytes) -> bytes:
         """
