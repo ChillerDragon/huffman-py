@@ -171,6 +171,50 @@ class Huffman:
             if k == HUFFMAN_LUTBITS:
                 self.decoded_lut[i] = node
 
+    def compress(self, data: bytes) -> bytes:
+        """
+        Compresses data using the teeworlds frequency table
+        """
+        src_index = 0
+        end = len(data)
+        bits = 0
+        bitcount = 0
+        dst = bytearray()
+
+        if len(data) == 0:
+            return b''
+
+        symbol = data[src_index]
+        src_index += 1
+
+        while src_index < end:
+            bits |= self.nodes[symbol].bits << bitcount
+            bitcount += self.nodes[symbol].num_bits
+
+            symbol = data[src_index]
+            src_index += 1
+
+            while bitcount >= 8:
+                dst.append(bits & 0xFF)
+                bits >>= 8
+                bitcount -= 8
+
+        bits |= self.nodes[symbol].bits << bitcount
+        bitcount += self.nodes[symbol].num_bits
+        while bitcount >= 8:
+            dst.append(bits & 0xFF)
+            bits >>= 8
+            bitcount -= 8
+
+        bits |= self.nodes[HUFFMAN_EOF_SYMBOL].bits << bitcount
+        bitcount += self.nodes[HUFFMAN_EOF_SYMBOL].num_bits
+        while bitcount >= 8:
+            dst.append(bits & 0xFF)
+            bits >>= 8
+            bitcount -= 8
+        dst.append(bits)
+        return dst
+
     def decompress(self, data: bytes) -> bytes:
         """
         Decompresses data using the teeworlds frequency table

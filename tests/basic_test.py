@@ -14,6 +14,12 @@ def test_huffman_hello_world():
     expected = b'hello world'
     assert decompressed == expected
 
+def test_huffman_hello_world_compress():
+    huffman = Huffman()
+    compressed = huffman.compress(b'hello world')
+    expected = bytes([174, 149, 19, 92, 9, 87, 194, 22, 177, 86, 220, 218, 34, 56, 185, 18, 156, 168, 184, 1])
+    assert compressed == expected
+
 def test_huffman_A():
     huffman = Huffman()
     compressed = bytes([188, 21, 55, 0])
