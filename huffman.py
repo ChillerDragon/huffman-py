@@ -134,6 +134,7 @@ class Huffman:
             while bitcount < 24 and src_index < size:
                 bits |= data[src_index] << bitcount
                 bitcount += 8
+                src_index += 1
 
             if not node:
                 node = self.decoded_lut[bits&HUFFMAN_LUTMASK]
