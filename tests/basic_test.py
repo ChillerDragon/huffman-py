@@ -27,3 +27,10 @@ def test_huffman_A():
     expected = b'A'
     assert decompressed == expected
 
+def test_huffman_AABB():
+    huffman = Huffman()
+    compressed = bytes([0xbc, 0x79, 0x6b, 0xa5, 0x95, 0xe2, 0x06])
+    decompressed = huffman.decompress(compressed)
+    expected = b'AABB'
+    assert decompressed == expected
+
