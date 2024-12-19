@@ -256,7 +256,7 @@ class Huffman:
                     # no more bits, decoding error
                     if bitcount == 0:
                         print("no more bits")
-                        return dst
+                        return bytes(dst)
             if node == eof:
                 break
             dst.append(node.symbol)
